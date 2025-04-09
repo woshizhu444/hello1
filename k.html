@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kilocodeai2api 快速部署教程</title>
+    <style>
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #213547;
+            --color-text-secondary: #454545;
+            --color-border: #eee;
+            --color-code-bg: #f6f8fa;
+            --color-primary: #3eaf7c;
+            --color-link: #4a77b5;
+            --color-link-hover: #3eaf7c;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            --font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            padding-right: 2rem;
+            padding-top: 4rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid var(--color-border);
+        }
+
+        .content {
+            flex: 1;
+            padding: 4rem 0;
+            max-width: 800px;
+        }
+
+        h1, h2, h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.65rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid var(--color-border);
+            margin-top: 3rem;
+        }
+
+        h3 {
+            font-size: 1.35rem;
+        }
+
+        p, ul, ol {
+            margin: 1rem 0;
+        }
+
+        a {
+            color: var(--color-link);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--color-link-hover);
+            text-decoration: underline;
+        }
+
+        code {
+            font-family: var(--font-family-mono);
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 0.85em;
+            background-color: rgba(175, 184, 193, 0.2);
+            border-radius: 3px;
+        }
+
+        pre {
+            background-color: var(--color-code-bg);
+            border-radius: 6px;
+            padding: 1em;
+            overflow: auto;
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: 0.9em;
+            color: var(--color-text);
+            overflow-wrap: normal;
+            white-space: pre;
+        }
+
+        .code-block {
+            position: relative;
+            background-color: var(--color-code-bg);
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.5rem 1rem;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            font-size: 0.85em;
+            color: var(--color-text-secondary);
+        }
+
+        .code-content {
+            padding: 1em;
+            overflow: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .notice {
+            background-color: rgba(235, 245, 250, 1);
+            border-left: 4px solid var(--color-primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .notice-title {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .header {
+            height: 60px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            position: sticky;
+            top: 0;
+            background-color: var(--color-bg);
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+                padding: 1rem 0;
+            }
+
+            .content {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-title">2API文档站</div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>kilocodeai2api</h3>
+            <ul>
+                <li><a href="#quick-deploy">快速部署</a></li>
+                <li><a href="#docker-compose">基于 Docker-Compose 部署</a></li>
+                <li><a href="#docker">基于 Docker 部署</a></li>
+                <li><a href="#configuration">配置</a></li>
+                <li><a href="#cookie">cookie获取方式</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h1 id="quick-deploy">快速部署</h1>
+
+            <h2 id="docker-compose">基于 Docker-Compose(All In One) 进行部署</h2>
+
+            <div class="code-block">
+                <div class="code-header">shell</div>
+                <div class="code-content">
+                    <pre><code>docker-compose pull && docker-compose up -d</code></pre>
+                </div>
+            </div>
+
+            <h3>docker-compose.yml</h3>
+
+            <div class="code-block">
+                <div class="code-header">docker</div>
+                <div class="code-content">
+                    <pre><code>version: '3.4'
+
+services:
+  kilo2api:
+    image: deanxv/kilo2api:latest
+    container_name: kilo2api
+    restart: always
+    ports:
+      - "7099:7099"
+    volumes:
+      - ./data:/app/kilo2api/data
+    environment:
+      - KL_COOKIE=******  # cookie (参考下方获取方式,多个以逗号分隔)
+      - API_SECRET=123456  # [可选]接口认证密钥-授权访问接口需要携带(参考下方配置,多个以逗号分隔)
+      - TZ=Asia/Shanghai</code></pre>
+                </div>
+            </div>
+
+            <h2 id="docker">基于 Docker 进行部署</h2>
+
+            <div class="code-block">
+                <div class="code-header">docker</div>
+                <div class="code-content">
+                    <pre><code>docker run --name kilo2api -d --restart always \
+-p 7099:7099 \
+-v $(pwd)/data:/app/kilo2api/data \
+-e KL_COOKIE=***** \
+-e API_SECRET="123456" \
+-e TZ=Asia/Shanghai \
+deanxv/kilo2api</code></pre>
+                </div>
+            </div>
+
+            <p>其中 <code>API_SECRET</code> 和 <code>KL_COOKIE</code> 参数为必填项。</p>
+
+
+
+            <h2 id="configuration">配置</h2>
+
+            <h3>环境变量</h3>
+
+            <ol>
+                <li><code>PORT=7099</code> [可选]端口,默认值为7099</li>
+                <li><code>DEBUG=true</code> [可选]启用DEBUG模式,[true:开启|false:关闭|默认值:关闭]</li>
+                <li><code>API_SECRET=123456</code> [可选]接口认证密钥-授权访问接口需要携带(Authorization)(等价于API-KEY)(多个以逗号分隔)</li>
+                <li><code>KL_COOKIE=******</code> cookie (参考下方获取方式,多个以逗号分隔)</li>
+                <li><code>REQUEST_RATE_LIMIT=60</code> [可选]每个ip每分钟最大请求次数,默认值:60/min</li>
+                <li><code>PROXY_URL=http://127.0.0.1:10801</code> [可选]设置代理</li>
+                <li><code>ROUTE_PREFIX=hf</code> [可选]路由前缀,例如设置为hf,访问路径变为:<code>/hf/v1/chat/completions</code></li>
+                <li><code>RATE_LIMIT_COOKIE_LOCK_DURATION=600</code> [可选]设置速率限制时cookie锁定时长,默认60s</li>
+            </ol>
+
+            <h2 id="cookie">cookie获取方式</h2>
+
+            <ol>
+                <li>打开<a href="https://kilocode.ai/profile" target="_blank">kilocode</a>。</li>
+                <li>打开开发者工具（<strong>F12</strong>）。</li>
+                <li>切换到Google开发者工具。</li>
+                <li>在控制台中执行下面的代码：</li>
+            </ol>
+
+            <div class="code-block">
+                <div class="code-content">
+                    <pre><code>document.querySelector('a[href^="vscode://kilocode.kilo-code/kilocode?token="]').href.split('token=')[1]</code></pre>
+                </div>
+            </div>
+
+            <ol start="5">
+                <li>打开的消息即为cookie内容,可填入环境变量<code>KL_COOKIE</code>。</li>
+            </ol>
+
+            <div class="images">
+                <img src="https://ext.same-assets.com/3094430215/932190971.png" alt="获取cookie步骤1">
+                <img src="https://ext.same-assets.com/3094430215/3299761669.png" alt="获取cookie步骤2">
+            </div>
+
+            <footer>
+                <p>最后更新时间: 4/9/25, 7:12 AM</p>
+                <div>
+                    <p>RELEASED UNDER THE MIT LICENSE.</p>
+                    <p>Copyright © 2025-PRESENT Dean</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
